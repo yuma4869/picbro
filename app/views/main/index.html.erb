@@ -1,0 +1,154 @@
+<style>
+    body {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        overflow: scroll;
+  -ms-overflow-style: none;    /* IE, Edge 対応 */
+  scrollbar-width: none;       /* Firefox 対応 */
+}
+
+body::-webkit-scrollbar {  /* Chrome, Safari 対応 */
+  display:none;
+}
+</style>
+<button id="createButton">create</button>
+<input type="text" name="url" id="url">
+<button id="submitButton">送信</button>
+<label>テキスト：<input type="text" name="text" id="text"></label>
+<%= button_to "スクリーンショット再取得","/browser/screen_shot",:method => :get %>
+<%= button_to "selectタグ取得","/browser/select",:method => :get %>
+
+<%= form_tag('/browser/sleep', method: :post) do %>
+    <label>待機時間：<input type="text" name="sleep" id="sleep" onkeyup="checkSleep()"></label>
+    <input type="submit" value="待機時間を設定">
+<% end %>
+
+<!--TODO:待機時間をpostで送信したら送信した後に@file_pathが空になったりすることとかない野郎からする-->
+<%= @sleep %>
+<% if !@selects.nil? %>
+<% @selects.each do |selects| %>
+<%= selects.html_safe %>
+<% end %>
+<% end %>
+<p id="error"></p>
+<%= button_to "/browser/back",:class => "next_button",:method => :get do %>
+<%= image_tag "browser_next.png" %>
+<% end %>
+<%= button_to "/browser/next",:class => "next_button",:method => :get do %>
+<%= image_tag "browser_back.png" %>
+<% end %>
+<!--ボタンとか上に持ってきたからスクリーンショット現在のブラウザの通りじゃなくなったけどそれは後々ボタンの分だけ引いたりして調整する-->
+<img src="/images/<%= @file_path %>.png" alt="page" id="img">
+
+<!--右クリックとかで連続クリックのやつ再現したい、右クリック一回目のところに薄い赤丸おいてその横に1 2 とか書いて-->
+    <script>
+        //sleep整数チェック
+        function checkSleep() {
+            let sleep = document.getElementById("sleep").value;
+            let regex = /^([+-]?\d+)(?:\.\d+)?$/;
+            if (regex.test(sleep)){
+                let error = document.getElementById("error");
+                error.innerText = "";      
+            }else{
+                let error = document.getElementById("error");
+                error.innerText = "待機時間には整数を必ず入力してください";          
+            }
+        }
+
+        function butotnClick(){
+            let textbox = document.getElementById('url');
+            let value = textbox.value;
+            let url = encodeURIComponent(value);
+
+            window.location.href = "http://localhost:3000/browser/" + url;         
+        }
+        function createBrowser() {
+            console.log("sss");
+            let width = window.innerWidth;
+            let height = window.innerHeight;
+            window.location.href = "http://localhost:3000/browser/create?width=" + width + "&height=" + height;         
+        }
+        window.addEventListener('load', function(){
+
+        let urlSubmitButton = document.getElementById('submitButton');
+        urlSubmitButton.addEventListener('click', butotnClick);
+
+        let createButton = document.getElementById("createButton");
+        createButton.addEventListener("click", createBrowser);
+
+        })
+    </script>
+
+        <!--画像クリックされた位置の座標送る-->
+    <script>
+        document.getElementById( "img" ).addEventListener( "click", function( event ) {
+        var click_x = event.pageX ;
+        var click_y = event.pageY ;
+
+        // 要素の位置を取得
+        var client_rect = this.getBoundingClientRect() ;
+        var position_x = client_rect.left + window.pageXOffset ;
+        var position_y = client_rect.top + window.pageYOffset ;
+
+        // 要素内におけるクリック位置を計算
+        var x = click_x - position_x ;
+        var y = click_y - position_y ;
+
+        // 入力するテキストがあるかどうか確認
+        let input_text = document.getElementById("text").value;
+        if (input_text){
+            window.location.href = "http://localhost:3000/browser/" + x + "/" + y + "/" + input_text;
+
+        } else {
+            window.location.href = "http://localhost:3000/browser/" + x + "/" + y;
+        }
+
+
+    } ) ;
+    </script>
+
+    <!--スクロール検知-->
+    <script>
+    //厳密にはマウスホイール検知
+    window.onmousewheel = function(){
+        if(event.wheelDelta > 0){
+            window.location.href = "http://localhost:3000/browser/scrollup";
+        }else{
+            window.location.href = "http://localhost:3000/browser/scrolldown";
+        }
+    }
+    </script>
+
+    <!--特定の文字を押された際に特定の動作をする-->
+    <script>
+    const keyArr = []
+
+    function onKeyDown(e) {
+    keyArr.push(e.code)
+    if (keyArr.length > 10) {
+        keyArr.shift()
+    }
+    const konamiCommand = [
+        'ArrowUp',
+        'ArrowUp',
+        'ArrowDown',
+        'ArrowDown',
+        'ArrowLeft',
+        'ArrowRight',
+        'ArrowLeft',
+        'ArrowRight',
+        'KeyB',
+        'KeyA',
+    ]
+    console.log(keyArr)
+    
+    if (String(keyArr) === String(konamiCommand)) {
+        console.log("できた！")
+    }
+    }
+    
+    img = document.getElementById("img");
+    document.addEventListener('keydown', onKeyDown)
+
+    </script>
