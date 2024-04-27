@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
   get '/' => "main#index"
 
+
   #ブラウザー作成
   get "browser/create" => "main#create"
 
   #スクロール
-  get "browser/scrolldown" => "main#scroll_down"
-  get "browser/scrollup" => "main#scroll_up"
+  get "browser/scroll/:scroll" => "main#scroll"
 
   #スクリーンショット再取得
   get "browser/screen_shot" => "main#rescreen_shot"
@@ -18,8 +18,26 @@ Rails.application.routes.draw do
   post "browser/sleep" => "main#set_sleep"
 
   #戻る&進む
-  get "browser/back" => "main#back"
+  get "browser/prev" => "main#back"
   get "browser/next" => "main#next"
+
+  #タブ移動
+  get "browser/tab_move" => "main#tab_move"
+
+  #タブ削除
+  get "browser/tab_rm" => "main#tab_rm"
+
+  #新しいタブ作成
+  get "browser/tab_create" => "main#tab_create"
+
+  #クリック&ホールド
+  get "browser/click_hold/:one_x/:one_y/:two_x/:two_y" => "main#click_hold"
+
+  #ページ内の動画取得
+  get "browser/video" => "main#video"
+
+  #youtubeの動画取得
+  get "browser/youtube_video" => "main#youtube_video"
 
   #アクセス
   get "browser/:url" => "main#page",constraints: { url: /[^\/]+/ }
@@ -30,6 +48,6 @@ Rails.application.routes.draw do
   #クリックしてテキスト送信
   get "browser/:x/:y/:text" => "main#text"
 
-  #多数クリック&テキスト送信
-  match "browser/*params" => "main#for_click",:via => :get
+  #多数クリック&テキスト送信    べつにいらんなおもったため実装取り消し
+  #match "browser/*params" => "main#for_click",:via => :get 
 end

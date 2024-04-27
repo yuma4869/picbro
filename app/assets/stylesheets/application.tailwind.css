@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .browser-btn {
+      @apply transition ease-in-out hover:bg-[#d2d2d2] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:hover:bg-[#d2d2d2] dark:focus:ring-blue-800 justify-center;
+    }
+
+}

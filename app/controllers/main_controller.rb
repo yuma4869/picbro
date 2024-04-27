@@ -1,36 +1,71 @@
 require "selenium-webdriver"
 
 class MainController < ApplicationController
-  before_action :instance_sleep,only:[:index,:create,:rescreen_shot,:get_select,:scroll_down,:scroll_up,:back,:next,:for_click,:page,:click,:text] #renderを最後つかうやつ
+  #after_action :instance_sleep,only:[:index,:create,:rescreen_shot,:get_select,:scroll_down,:scroll_up,:back,:next,:next_tab_view,:prev_tab_view,:click_hold,:video,:youtube_video,:for_click,:page,:click,:text] #renderを最後つかうやつ
+  #before_action :tab_check,only:[:index,:create,:rescreen_shot,:get_select,:scroll_down,:scroll_up,:back,:next,:next_tab_view,:prev_tab_view,:click_hold,:video,:youtube_video,:for_click,:page,:click,:text]
+  #before_action :instance_video,only:[:index,:create,:rescreen_shot,:get_select,:scroll_down,:scroll_up,:back,:next,:next_tab_view,:prev_tab_view,:click_hold,:video,:youtube_video,:for_click,:page,:click,:text]
+
+  # before_action :instance_sleep,only:[:render]
+  # before_action :tab_check,only:[:render]
+  # before_action :instance_video,only:[:render]
+  # before_action :test,only:[:create]
+
+  
 
   #####やることリスト#########
-  #テキスト入力を例えば「t」をおしたら現在のカーソルの横に入力欄が出てそこで入力して簡単にテキストを指定できる
-  #ビデオ再生（一番の目的はyoutube)
+  #済: ビデオ再生（一番の目的はyoutube) youtubeのみ済
   #:済　ロードが長いのとかように待機時間指定
   #ブラウザとかを再現するUIデザインをプロに任せる？時間あったら自分でやる
   #https://qiita.com/mochio/items/dc9935ee607895420186 この記事にあるやつだいたい再現する
-  #横向きのスクロール
-  #連続クリックのポインター
-  #selectタグ
+  #済：横向きのスクロール
+  #いらない：連続クリックのポインター
+  #：済　selectタグ
   #お気に入りとか閲覧履歴とか記録したい無料でデバイス記録してcookieで閲覧履歴保存するかログインして閲覧履歴保存してもらうかは未定
   #LINEとかもできるように
   #https以外でもアクセスできるように
   #プロセカの最初のやつみたいに、上に、「selectはselectボタンを押そう」「テキスト入力はTをクリック！」「ロードが続いているときはスクリーンショット再取得ボタンをおす！（バックグラウンドでブラウザは起動しているからもうロードは終わってるはずだから）」みたいなのを上部に表示して回す。クリックしたら次のメッセージ表示
-  #クリック&ホールドで「s」おして一回目のクリックしたところの横に1、その次にクリックしたところを2と表示して、1から2にクリック&ホールドしてこれ応用してスクロールバー動かしたりする
+  #済：クリック&ホールドで「s」おして一回目のクリックしたところの横に1、その次にクリックしたところを2と表示して、1から2にクリック&ホールドしてこれ応用してスクロールバー動かしたりする
   #ファイルアップロードとかはpicture_browserの意義に反するから実装しないかも？
+  #:新しいタブが開かれたこと教えるだけでよきとした　　リンクとか押して新しいタブが開かれたら検知して、そっちに移動できるようにしたりする
+  #拡大縮小
+  #iframe(youtubeとかこれで流されてること多いけど)
+
+  #これ悪用される恐れとかあるから、torでIP秘匿は別にせんでええからvpsのログインを公開鍵だけにしておく
+  #：済　youtubeはクリックした動画のURL取得して裏でytdlp動かす
+  #yt-dlpはニコニコとかにも使えるからそそれにも対応
+  #なんかボタンと顔してyoutubeの倍速とかショート対応とか字幕とかに対応してほしい人はこれ推してってやっておした人数表示できるようにして人気アピールとかファイルアップロード機能とか
+  #コピーとか、Ctrl+cとか実行できて中の文字取れたり、特定キーおしたり、やってほしいことはメールアドレスなどは入れなくてもいいから問い合わせで気軽にできるようにする
+
+  #ニコニコ動画ダウンロードでダウンロード制限のあある動画もcookie設定したらダウンロードできるからそれ実装してほしいか見たいなアンケートもとる
+
+  #01/12 ToDO 新しいタブ作成。レスポンシブ。
+  #01/15 rails sでエラーが出るのは"D:\Pragram\Ruby\Ruby32-x64\lib\ruby\3.2.0\x64-mingw-ucrt\fiber.so"を追加したから
+
+  def test_view
+    
+  end
 
   def index
-    @file_path = "default"
+    
+    normal_action()
+  end
+
+  def test
+    @fuck = "test"
+    redirect_to "/",params:{"fuck" => @fuck}
   end
 
   def create
     initBrowser(params[:width],params[:height])
     @file_path = "default"
+    normal_action()
     render("main/index")
   end
 
   def rescreen_shot #スクリーンショット再取得
     screen_shot()
+    normal_action()
+    # @scroll_init = true
     render("main/index")
   end
 
@@ -48,7 +83,8 @@ class MainController < ApplicationController
       flash[:notice] = "待機時間は正の実数を入力してください"
     end
     puts @sleep
-    redirect_to ("/")
+    normal_action()
+    render("main/index")
   end
 
   def get_select
@@ -56,30 +92,24 @@ class MainController < ApplicationController
     puts source
     @selects = source.gsub(/\n/, '').scan(/<select.*?>.*?<\/select>/)
     screen_shot()
+    normal_action()
     render("main/index")
   end
 
   #ToDo
   #スクロール、やけど、インスタのフォロワーのところのスクロールみたいに一部しか出金みたいなところはまだ試してないけど、クリックホールドでスクロールバー動かす
   #インスタのやつとかはlocation_once_scrolled_into_view使ったらいいかも？試してないけど
-  def scroll_down
+  #20240105  ドラック安堵ドロップですくろーるばー移動することで解決。コラムみたいにして紹介
+  def scroll
+    scroll = params[:scroll]
     begin
-      @@driver.execute_script('window.scrollBy(0,500);')
+      @@driver.execute_script("window.scrollBy(0,#{scroll});")
     rescue
       flash.now[:alert] = "ブラウザが作られていません。新しく作り直してください。"
     end
     screen_shot()
-    render("main/index")
-  end
-
-  def scroll_up
-    begin
-      @@driver.execute_script('window.scrollBy(0,-500);')
-    rescue
-      flash.now[:alert] = "ブラウザが作られていません。新しく作り直してください。"
-    end
-    screen_shot()
-    render("main/index")
+    normal_action()
+    render("main/index") 
   end
 
   def back
@@ -87,8 +117,10 @@ class MainController < ApplicationController
       @@driver.navigate.back
     rescue
       flash.now[:alert] = "ブラウザが作られていません。新しく作り直してください。"
+      render("main/index")
     end
     screen_shot()
+    normal_action()
     render("main/index")    
   end
 
@@ -97,9 +129,109 @@ class MainController < ApplicationController
       @@driver.navigate.forward
     rescue
       flash.now[:alert] = "ブラウザが作られていません。新しく作り直してください。"
+      render("main/index")
     end
     screen_shot()
+    normal_action()
+    render("main/index") 
+  end
+
+  def tab_move
+    tab_index = params[:index].to_i
+    begin
+      @@driver.switch_to.window(@@driver.window_handles[tab_index])
+    rescue => e
+      puts e  
+    end
+    screen_shot()
+    normal_action()
+    render("main/index")
+  end
+
+  def tab_rm 
+    tab_index = params[:index].to_i
+    puts tab_index
+    begin
+      @@driver.switch_to.window(@@driver.window_handles[tab_index])
+      @@driver.close
+      last_window = @@driver.window_handles.last
+      @@driver.switch_to.window(last_window)
+    rescue => e
+      puts e  
+    end
+    normal_action()
+    screen_shot()
+    render("main/index")
+  end
+
+  def tab_create
+    @@driver.switch_to.new_window(:tab)
+    @@driver.get("https://google.com")
+    normal_action()
+    screen_shot()
+    render("main/index")  
+  end
+  
+  def click_hold
+    one_x = params[:one_x].to_i
+    one_y = params[:one_y].to_i
+    two_x = params[:two_x].to_i - one_x #move_byで相対位置で動くから差を求める
+    two_y = params[:two_y].to_i - one_y
+
+    puts one_x
+    puts one_y
+    puts two_x
+    puts two_y
+
+    begin
+      @@driver.action.move_by(one_x, one_y).click_and_hold.move_by(two_x, two_y).perform
+    rescue
+      @@driver.action.move_by(one_x-2, one_y-2).click_and_hold.move_by(two_x-2, two_y-2).perform
+    end
+    screen_shot()
+    normal_action()
+    render("main/index")
+  end
+
+  
+  def video
+    source = @@driver.page_source
+    videos = source.gsub(/\n/, '').scan(/<video.*?>.*?<\/video>/)
+    if videos.length > 0
+      title = @@driver.title
+      videos.each do |video|
+        @@video_path.push({"video" => video,"title" => title})
+      end
+    else
+      flash.now[:alert] = "このページ内に動画はありませんでした"
+    end
+    screen_shot()
+    normal_action()
     render("main/index")    
+  end
+
+
+  def youtube_video
+    current_url = @@driver.current_url
+    if current_url.include?("https://www.youtube.com/watch?v=") || current_url.include?("https://www.nicovideo.jp/watch/")
+      random_path = random_string(3)
+      video_path = "public/videos/" + random_path
+      system("python ./app/lib/yt-dlp.py #{current_url} #{video_path}")
+      video_paths = get_files_with_string("public/videos/",random_path)
+      video_paths.each do |video_path|
+        puts video_path
+        pre_title = video_path[40..]
+        puts pre_title
+        title = pre_title[..-5]
+        puts title
+        @@video_path.push({"youtube" => video_path,"title" => title})
+      end
+    else
+      flash.now[:alert] = "youtubeの動画を開いた状態で押してください。"
+    end
+    screen_shot()
+    normal_action()
+    render("main/index")
   end
 
   def for_click
@@ -121,21 +253,25 @@ class MainController < ApplicationController
       vector.each_with_index { |first, second| second.even? ? x << first : y << first }
       for_input_page(x,y,text,count/2)
     end
+    normal_action()
     render("main/index")
   end
 
   def page
     get_page(params[:url])
+    normal_action()
     render("main/index")
   end
 
   def click
     click_page(params[:x].to_i,params[:y].to_i)
+    normal_action()
     render("main/index")
   end
 
   def text
     input_page(params[:x].to_i,params[:y].to_i,params[:text])
+    normal_action()
     render("main/index")
   end
 
@@ -147,12 +283,17 @@ class MainController < ApplicationController
     rescue
       puts "driverはないようです"
     end
-
+    
+    @@video_path = []
+    Selenium::WebDriver.logger.output = File.join("./", "selenium.log")
+    Selenium::WebDriver.logger.level = :warn
+    
     options = Selenium::WebDriver::Chrome::Options.new
     puts 1
     options.add_argument('--headless')
-    puts 2
+    options.add_argument('--no-sandbox')
     options.add_argument("--window-size=#{width},#{height}")
+    options.add_argument("--mute-audio")
     puts 3
     @@driver = Selenium::WebDriver.for :chrome , options: options
     puts 4
@@ -212,17 +353,69 @@ class MainController < ApplicationController
 
   private
 
+  def normal_action  #rails初心者独学マンなのでこんなクソみたいな方法しか知りません
+    instance_sleep()
+    instance_video()
+    tab_check()
+  end
+
   def screen_shot
-    @file_path = random_string(5)
-    @@driver.save_screenshot("public/images/#{@file_path}.png")
+    begin
+      @file_path = random_string(5)
+      @@driver.save_screenshot("public/images/#{@file_path}.png")
+    rescue => e
+      puts e
+    end
   end
 
   def instance_sleep
+
     begin
       @sleep = @@sleep
     rescue
       @sleep = 0.5
     end
+  end
+
+  def instance_video
+    begin
+      @video_path = @@video_path
+    rescue
+
+    end
+  end
+
+  def tab_check
+    begin
+      @tab_titles = []
+      puts "a"
+      @@tab_index = @@driver.window_handles.index(@@driver.window_handle)
+      puts "b"
+      @tab_index = @@tab_index
+
+      total = @@driver.window_handles.length.to_i
+      puts total
+      for i in 0..total - 1
+        @@driver.switch_to.window(@@driver.window_handles[i])
+        @tab_titles.push(@@driver.title)
+      end
+      @@driver.switch_to.window(@@driver.window_handles[@tab_index])
+
+      @total_tab = total - @tab_index
+    rescue => e
+      puts e
+    end
+  end
+
+  def get_files_with_string(folder_path, string)
+    files = Dir.glob(File.join(folder_path, "*"))
+    result = []
+    files.each do |file_path|
+      if file_path.include?(string)
+        result.push(file_path)
+      end
+    end
+    return result
   end
 
   def random_string(n)

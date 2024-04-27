@@ -1,0 +1,3 @@
+web: rails s
+css: yarn build:css --watch
+css: rails tailwindcss:watch

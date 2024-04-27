@@ -5,6 +5,8 @@ ruby "3.2.2"
 
 gem "selenium-webdriver"
 
+gem 'cssbundling-rails'
+gem 'jsbundling-rails'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.8"
 
@@ -69,6 +71,7 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
-  gem "selenium-webdriver"
 
 end
+
+gem "tailwindcss-rails", "~> 2.3"
