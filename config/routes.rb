@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  get '/' => "main#index"
+  get '/' => "welcome#top"
+  get "test" => "welcome#test"
 
+  get '/browser' => "main#index"
 
   #ブラウザー作成
   get "browser/create" => "main#create"
