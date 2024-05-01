@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get "browser/scroll/:scroll" => "main#scroll"
 
   #スクリーンショット再取得
-  get "browser/screen_shot" => "main#rescreen_shot"
+  get "browser/screen-shot" => "main#rescreen_shot"
 
   #select取得
   get "browser/select" => "main#get_select"
@@ -24,22 +24,22 @@ Rails.application.routes.draw do
   get "browser/next" => "main#next"
 
   #タブ移動
-  get "browser/tab_move" => "main#tab_move"
+  get "browser/tab-move" => "main#tab_move"
 
   #タブ削除
-  get "browser/tab_rm" => "main#tab_rm"
+  get "browser/tab-rm" => "main#tab_rm"
 
   #新しいタブ作成
-  get "browser/tab_create" => "main#tab_create"
+  get "browser/tab-create" => "main#tab_create"
 
   #クリック&ホールド
-  get "browser/click_hold/:one_x/:one_y/:two_x/:two_y" => "main#click_hold"
+  get "browser/click-hold/:one_x/:one_y/:two_x/:two_y" => "main#click_hold"
 
   #ページ内の動画取得
   get "browser/video" => "main#video"
 
   #youtubeの動画取得
-  get "browser/youtube_video" => "main#youtube_video"
+  get "browser/youtube-video" => "main#youtube_video"
 
   #アクセス
   get "browser/:url" => "main#page",constraints: { url: /[^\/]+/ }

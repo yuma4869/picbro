@@ -546,7 +546,7 @@ video {
         </svg>
         <% end %>
 
-        <%= button_to "/browser/screen_shot",:class => "browser-btn btn-circle sm:mx-1 w-9 sm:w-11 h-9 sm:h-11", :method => :get do %>
+        <%= button_to "/browser/screen-shot",:class => "browser-btn btn-circle sm:mx-1 w-9 sm:w-11 h-9 sm:h-11", :method => :get do %>
             <svg class="w-10 sm:w-10 h-10 sm:h-10 text-gray-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <polyline points="23 4 23 10 17 10" />  <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" /></svg>
         <% end %>
 
@@ -617,15 +617,15 @@ video {
                 <% @tab_titles.each do |title| %>
                     <% class_name = i == @tab_index ? "tab active" : "tab" %>
                     <div class="tab_main">
-                    <%= form_tag("/browser/tab_move",method: :get) do %>
+                    <%= form_tag("/browser/tab-move",method: :get) do %>
                     <input type="hidden" name="index" value="<%= i %>">
                     <button type="submit" class="<%= class_name %>"><%= title %></button>
                     <% end %>
-                    <%= button_to "×", "/browser/tab_rm",:class => "tab_rm",:method => :get,params: {index: i} %>
+                    <%= button_to "×", "/browser/tab-rm",:class => "tab_rm",:method => :get,params: {index: i} %>
                     </div>
                     <% i += 1 %>
                 <% end %>
-                <%= button_to "＋","/browser/tab_create",:class => "tab_create",:method => :get %>
+                <%= button_to "＋","/browser/tab-create",:class => "tab_create",:method => :get %>
             <% end %>
         </div>
         <div id="videos" >
@@ -686,7 +686,7 @@ video {
                         <%= button_to "ページ内の動画","/browser/video",:method => :get %>
                     </li>
                     <li class="menu_item">
-                        <%= button_to "YouTube","/browser/youtube_video",:method => :get %>
+                        <%= button_to "YouTube","/browser/youtube-video",:method => :get %>
                     </li>
 
                 </ul>
@@ -759,7 +759,7 @@ video {
         let two_y = getStyle("two","top").replace("px","");
 
         if(one_hold_value == "block" && two_hold_value == "block"){
-            window.location.href = "http://localhost:3000/browser/click_hold/" + one_x + "/" + one_y + "/" + two_x + "/" + two_y;
+            window.location.href = "http://localhost:3000/browser/click-hold/" + one_x + "/" + one_y + "/" + two_x + "/" + two_y;
         }
     }
 
