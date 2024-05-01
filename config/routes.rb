@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   #ブラウザー作成
   get "browser/create" => "main#create"
+  #tor
+  get "browser/tor-create" => "main#tor_create"
 
   #スクロール
   get "browser/scroll/:scroll" => "main#scroll"

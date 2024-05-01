@@ -62,6 +62,13 @@ class MainController < ApplicationController
     render("main/index")
   end
 
+  def tor_create
+    tor_initBrowser(params[:width],params[:height])
+    @file_path = "default"
+    normal_action()
+    render("main/index")
+  end
+
   def rescreen_shot #スクリーンショット再取得
     screen_shot()
     normal_action()
@@ -289,19 +296,34 @@ class MainController < ApplicationController
     Selenium::WebDriver.logger.level = :warn
     
     options = Selenium::WebDriver::Chrome::Options.new
-    puts 1
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument("--window-size=#{width},#{height}")
     options.add_argument("--mute-audio")
-    puts 3
     @@driver = Selenium::WebDriver.for :chrome , options: options
-    puts 4
     @wait = Selenium::WebDriver::Wait.new(:timeout => 100)
-    puts 5
-
   end
 
+  def tor_initBrowser(width,height)
+    begin
+      @@driver.nil?
+      @@driver.quit
+    rescue
+      puts "driverはないようです"
+    end
+    
+    @@video_path = []
+
+    
+    options = Selenium::WebDriver::Chrome::Options.new
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument("--proxy-server=socks5://localhost:9150")
+    options.add_argument("--window-size=#{width},#{height}")
+    options.add_argument("--mute-audio")
+    @@driver = Selenium::WebDriver.for :chrome , options: options
+    @wait = Selenium::WebDriver::Wait.new(:timeout => 100)
+  end
   #実装するときはスクリーンショットのところとか関数化したり、結構重なってるところとかあるからやめたり、begin とか使ったりする
 
   def get_page(url)
