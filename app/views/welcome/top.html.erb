@@ -1,8 +1,11 @@
-
+<style>
+  #header { transition: transform 0.3s 0.3s; }
+  #header.header_hidden { transform: translateY(-80px); }
+</style>
 <script src="//unpkg.com/alpinejs"></script>
 
 <div x-data="{ open: false }">
-  <header class="sticky top-0">
+  <header class="sticky top-0 bg-white" id="header">
     <nav class="relative items-center pt-5 px-4 mx-auto max-w-screen-xl sm:px-8 sm:flex sm:space-x-6">
       <div class="flex justify-between">
         <a href="javascript:void(0)"><%= image_tag "picbro_logo.png", size: "120x50", alt: "picbro logo" %></a>
@@ -23,66 +26,135 @@
       </div>
       <ul :class="{'hidden': !open, 'block': open}" class="shadow-md rounded-md p-4 flex-1 mt-12 absolute z-20 top-8 right-4 w-64 border sm:shadow-none sm:block sm:border-0 sm:mt-0 sm:static sm:w-auto gap-x-5 ml-12 lg:flex xl:gap-x-6">
         <div class="order-1 justify-end items-center space-y-5 sm:flex sm:space-x-6 sm:space-y-0">
-          <li class="contents text-gray-500 hover:text-indigo-600"><a class="py-3 group [body:not(.home)_&amp;]:hover:text-primary" href="/ask-one/" aria-label="Ask One">
-			<span class="relative block overflow-hidden" aria-hidden="true">
-				<span class="inline-flex">
-					<span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 0ms">
-						A
-					</span>
-					<span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 20ms">
-						b
-					</span>
-					<span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 40ms">
-						o
-					</span>
-					<span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 60ms">
-						u 
-					</span>
-					<span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 80ms">
-						t
-					</span>
-					<span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 100ms">
-						
-					</span>
-					<span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 120ms">
-						M
-					</span>
-					<span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 140ms">
-						e
-					</span>
-				</span>
+          <li class="text-gray-500 hover:text-indigo-600">
+          <a class="py-3 group" href="/ask-one/" aria-label="Ask One">
+          <span class="relative block overflow-hidden" aria-hidden="true">
+            <span class="inline-flex">
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 0ms">
+                A
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 20ms">
+                b
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 40ms">
+                o
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 60ms">
+                u 
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 80ms">
+                t
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 100ms">
+                
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 120ms">
+                M
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 140ms">
+                e
+              </span>
+            </span>
 
-				<span class="absolute inline-flex top-0 left-0">
-				<span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 0ms">
-					A
-				</span>
-				<span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 20ms">
-					b
-				</span>
-				<span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 40ms">
-					o
-				</span>
-				<span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 60ms">
-					u 
-				</span>
-				<span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 80ms">
-					t
-				</span>
-				<span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 100ms">
-					
-				</span>
-				<span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 120ms">
-					M
-				</span>
-				<span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 140ms">
-					e
-				</span>
-					</span>
-	</span>
+            <span class="absolute inline-flex top-0 left-0">
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 0ms">
+                A
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 20ms">
+                b
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 40ms">
+                o
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 60ms">
+                u 
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 80ms">
+                t
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 100ms">
+                
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 120ms">
+                M
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 140ms">
+                e
+              </span>
+            </span>
+          </span>
+          </a>
+          </li>
+          <li class="text-gray-500 hover:text-indigo-600">
+          <a class="py-3 group" href="/ask-one/" aria-label="Ask One">
+          <span class="relative block overflow-hidden" aria-hidden="true">
+            <span class="inline-flex">
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 0ms">
+                使
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 40ms">
+                い
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 80ms">
+                方
+              </span>
+            </span>
 
-		  </a></li>
-          <li class="text-gray-500 hover:text-indigo-600"><a href="javascript:void(0)">使い方</a></li>
-          <li class="text-gray-500 hover:text-indigo-600"><a href="javascript:void(0)">問い合わせ</a></li>
+            <span class="absolute inline-flex top-0 left-0">
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 0ms">
+                使
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 40ms">
+                い
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 80ms">
+                方
+              </span>
+            </span>
+          </span>
+          </a>
+          </li>
+          <li class="text-gray-500 hover:text-indigo-600">
+          <a class="py-3 group" href="/ask-one/" aria-label="Ask One">
+          <span class="relative block overflow-hidden" aria-hidden="true">
+            <span class="inline-flex">
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 0ms">
+                問
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 20ms">
+                い
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 40ms">
+                合
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 60ms">
+                わ
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 text-gray-090 opacity-100 group-hover:-translate-y-full group-hover:opacity-0" style="transition-delay: 80ms">
+                せ
+              </span>
+            </span>
+
+            <span class="absolute inline-flex top-0 left-0">
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 0ms">
+                問
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 20ms">
+                い
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 40ms">
+                合
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 60ms">
+                わ
+              </span>
+              <span class="inline-block transition-[color,transform,opacity] duration-700 group-hover:duration-200 opacity-0 translate-y-full group-hover:translate-y-0 group-hover:opacity-100" style="transition-delay: 80ms">
+                せ
+              </span>
+            </span>
+          </span>
+          </a>
+          </li>
         </div>
       </ul>
     </nav>
@@ -118,3 +190,20 @@
   </section>
   <div style="height:10000px">sss</div>
 </div>
+<script>
+  //ヘッダーを出し入れ
+const header = document.querySelector('header');
+let prevY = window.scrollY; // 前回のスクロール位置を初期化
+
+window.addEventListener('scroll', () => {
+  const currentY = window.scrollY; // 現在のスクロール位置を取得
+  if (currentY < prevY) { // 上にスクロールしている場合
+    header.classList.remove('header_hidden'); // hiddenクラスを削除して表示する
+  } else { // 下にスクロールしている場合
+  if (currentY > 0) { //Safariなどのバウンススクロール対策
+      header.classList.add('header_hidden'); // hiddenクラスを追加して非表示にする
+    }
+  }
+  prevY = currentY; // 前回のスクロール位置を更新
+});
+</script>
