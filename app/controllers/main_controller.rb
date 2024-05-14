@@ -265,7 +265,7 @@ class MainController < ApplicationController
   end
 
   def page
-    get_page(params[:url])
+    get_page("https://" + params[:url])
     normal_action()
     render("main/index")
   end
