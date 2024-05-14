@@ -741,14 +741,14 @@ video {
         let value = textbox.value;
         let url = encodeURIComponent(value);
 
-        window.location.href = "https://picbro.yuma4869.com/browser/" + url;
+        window.location.href = "http://localhost:3000/browser/" + url;
     }
 
     function createBrowser() {
         console.log("hi");
         let width = document.getElementById("imgbox").clientWidth;
         let height = document.getElementById("imgbox").clientHeight;
-        window.location.href = "https://picbro.yuma4869.com/browser/create?width=" + width + "&height=" + height;
+        window.location.href = "http://localhost:3000/browser/create?width=" + width + "&height=" + height;
     }
 
     function clickAndHold() {
@@ -760,7 +760,7 @@ video {
         let two_y = getStyle("two","top").replace("px","");
 
         if(one_hold_value == "block" && two_hold_value == "block"){
-            window.location.href = "https://picbro.yuma4869.com/browser/click-hold/" + one_x + "/" + one_y + "/" + two_x + "/" + two_y;
+            window.location.href = "http://localhost:3000/browser/click-hold/" + one_x + "/" + one_y + "/" + two_x + "/" + two_y;
         }
     }
 
@@ -830,10 +830,10 @@ video {
     // 入力するテキストがあるかどうか確認
     var input_text = document.getElementById("text").value;
     if (input_text){
-        window.location.href = "https://picbro.yuma4869.com/browser/" + x + "/" + y + "/" + input_text;
+        window.location.href = "http://localhost:3000/browser/" + x + "/" + y + "/" + input_text;
 
     } else {
-        window.location.href = "https://picbro.yuma4869.com/browser/" + x + "/" + y;
+        window.location.href = "http://localhost:3000/browser/" + x + "/" + y;
     }
 
 
@@ -845,9 +845,9 @@ video {
 //いちいち止まらなあかんのだるいから、スクロールした回数をpxに変換してその分一気にスクロールする
 // window.onmousewheel = function(){
 //     if(event.wheelDelta > 0){
-//         window.location.href = "https://picbro.yuma4869.com/browser/scrollup";
+//         window.location.href = "http://localhost:3000/browser/scrollup";
 //     }else{
-//         window.location.href = "https://picbro.yuma4869.com/browser/scrolldown";
+//         window.location.href = "http://localhost:3000/browser/scrolldown";
 //     }
 // }
 var box = document.getElementById("imgbox");
@@ -874,7 +874,7 @@ box.onscroll = function() {
 box.onscrollend = (event) => {
     console.log("aaadfg"+scroll);
     if(Math.abs(scroll) >= 100){
-        window.location.href = "https://picbro.yuma4869.com/browser/scroll/" + scroll;
+        window.location.href = "http://localhost:3000/browser/scroll/" + scroll;
         scroll_flag = 1;
         console.log(scroll_flag);
     }
