@@ -223,7 +223,7 @@ class MainController < ApplicationController
     if current_url.include?("https://www.youtube.com/watch?v=") || current_url.include?("https://www.nicovideo.jp/watch/")
       random_path = random_string(3)
       video_path = "public/videos/" + random_path
-      system("python ./app/lib/yt-dlp.py #{current_url} #{video_path}")
+      system("python3 ./app/lib/yt-dlp.py #{current_url} #{video_path}")
       video_paths = get_files_with_string("public/videos/",random_path)
       video_paths.each do |video_path|
         puts video_path
