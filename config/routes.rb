@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   #tor
   get "browser/tor-create" => "main#tor_create"
 
+  #アクセス
+  post "browser/access" => "main#page"
+
   #スクロール
   get "browser/scroll/:scroll" => "main#scroll"
 
@@ -44,7 +47,7 @@ Rails.application.routes.draw do
   get "browser/youtube-video" => "main#youtube_video"
 
   #アクセス
-  get "browser/:url" => "main#page",constraints: { url: /[^\/]+/ }
+  # get "browser/:url" => "main#page",constraints: { url: /[^\/]+/ }
 
   #クリック
   get "browser/:x/:y" => "main#click" #今は別にいらんからパスにURL入れてないけどapiとか後々作るときはURLとクリック座標指定してpng返すみたいにする

@@ -13,6 +13,13 @@ class MainController < ApplicationController
   
 
   #####やることリスト#########
+  
+  ####最重要###########################
+  ##
+  ##    最初の画像今はyuma4869.comのトプ画なってるけど、そこにURLを入力して検索しても画像表示されなかったらリロードボタンを押す！！的なそういうことを書いてある画像にする。スマホとかとで変える
+  ##
+  ##################################
+
   #済: ビデオ再生（一番の目的はyoutube) youtubeのみ済
   #:済　ロードが長いのとかように待機時間指定
   #ブラウザとかを再現するUIデザインをプロに任せる？時間あったら自分でやる
@@ -265,9 +272,9 @@ class MainController < ApplicationController
   end
 
   def page
-    get_page("https://" + params[:url])
+    get_page(params[:url])
     normal_action()
-    render("main/index")
+    redirect_to("/browser")
   end
 
   def click
