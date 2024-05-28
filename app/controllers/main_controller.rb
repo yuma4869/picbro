@@ -94,7 +94,7 @@ class MainController < ApplicationController
       @sleep = @@sleep
       puts @sleep
     else
-      flash[:notice] = "待機時間は正の実数を入力してください"
+      flash.now[:error] = ["待機時間が正しくありません","待機時間は正の実数を入力してください"]
     end
     puts @sleep
     normal_action()
@@ -119,7 +119,7 @@ class MainController < ApplicationController
     begin
       @@driver.execute_script("window.scrollBy(0,#{scroll});")
     rescue
-      flash.now[:alert] = "ブラウザが作られていません。新しく作り直してください。"
+      flash.now[:error] = ["Create Browser","ブラウザが作られていません。新しく作り直してください。"]
     end
     screen_shot()
     normal_action()
@@ -130,7 +130,7 @@ class MainController < ApplicationController
     begin
       @@driver.navigate.back
     rescue
-      flash.now[:alert] = "ブラウザが作られていません。新しく作り直してください。"
+      flash.now[:error] = ["Create Browser","ブラウザが作られていません。新しく作り直してください。"]
       render("main/index")
     end
     screen_shot()
@@ -142,7 +142,7 @@ class MainController < ApplicationController
     begin
       @@driver.navigate.forward
     rescue
-      flash.now[:alert] = "ブラウザが作られていません。新しく作り直してください。"
+      flash.now[:error] = ["Create Browser","ブラウザが作られていません。新しく作り直してください。"]
       render("main/index")
     end
     screen_shot()
@@ -217,7 +217,7 @@ class MainController < ApplicationController
         @@video_path.push({"video" => video,"title" => title})
       end
     else
-      flash.now[:alert] = "このページ内に動画はありませんでした"
+      flash.now[:info] = ["No such videos","このページ内に動画はありませんでした"]
     end
     screen_shot()
     normal_action()
@@ -241,7 +241,7 @@ class MainController < ApplicationController
         @@video_path.push({"youtube" => video_path,"title" => title})
       end
     else
-      flash.now[:alert] = "youtubeの動画を開いた状態で押してください。"
+      flash.now[:warning] = ["利用方法を確認してください","youtubeの動画を開いた状態で押してください。"]
     end
     screen_shot()
     normal_action()

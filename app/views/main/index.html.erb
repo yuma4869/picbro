@@ -242,7 +242,6 @@ ul, ol {
 
 #imgbox {
     position:relative;
-    height:85vh;
     border:2px solid #cdcdcd;
     overflow-y:scroll;
     overflow-x:hidden;
@@ -515,7 +514,20 @@ video {
 <script src="https://kit.fontawesome.com/16eab4fef0.js" crossorigin="anonymous"></script>
 
 
-<p id="error" style="display:none;"></p>
+<%# <p id="error" style="display:none;"></p> %>
+    
+<% flash.each do |message_type, message| %>
+<div class="flex justify-center">
+<div role="alert" class="absolute alert alert-<%= message_type %> shadow-lg w-11/12 mt-2 opacity-80">
+  <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+  <div>
+    <h3 class="font-bold"><%= message[0] %></h3>
+    <div class="text-xs"><%= message[1] %></div>
+  </div>
+  <button class="btn btn-sm btn-<%= message_type %>">See</button>
+</div>
+</div>
+<% end %>
 
 <% if !@test.nil? %>
 <%= @test %>
@@ -530,7 +542,7 @@ video {
 
 
 <!--ボタンとか上に持ってきたからスクリーンショット現在のブラウザの通りじゃなくなったけどそれは後々ボタンの分だけ引いたりして調整する-->
-<div id="browser" class="my-2 mx-5">
+<div id="browser" class="pt-20 mx-5 h-1/5">
     <div class="flex items-center justify-center h-10 sm:h-20">
         <button id="createButton" class="browser-btn btn-circle text-xs mx-0 sm:mx-1 w-9 sm:w-11 h-9 sm:h-11">Go</button>
 
@@ -559,7 +571,7 @@ video {
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>
-                <input type="search" name="url" id="url" class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="URL" required />
+                <input type="search" name="url" id="url" class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://" required />
                 <button class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">検索</button>
             </div>
         <% end %>
@@ -654,7 +666,7 @@ video {
     <% if @file_path.nil? %>
     <% @file_path = "default" %>
     <% end %>
-    <div id="imgbox" class="relative" >
+    <div id="imgbox" class="relative h-[70vh]" >
 
         <p id="now_scrollup" class="scroll"></p>
         <div class="up h-[1000px]"></div>
