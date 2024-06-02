@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   get '/' => "welcome#top"
-  get "test" => "welcome#test"
-
+  
   get '/browser' => "main#index"
 
   #ブラウザー作成
