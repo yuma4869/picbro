@@ -83,12 +83,12 @@ class MainController < ApplicationController
     render("main/index")
   end
 
-  def set_sleep
+  def set_sleep(raw_sleep)
     # 正規表現を定義する
     regex = /\A[+-]?\d+\.?\d*\z/
 
     # 正規表現にマッチするかどうかを確認する
-    if regex.match(params[:sleep])
+    if regex.match(raw_sleep)
       @@sleep = params[:sleep].to_f
       puts @@sleep
       @sleep = @@sleep
@@ -98,7 +98,6 @@ class MainController < ApplicationController
     end
     puts @sleep
     normal_action()
-    render("main/index")
   end
 
   def get_select
@@ -272,6 +271,7 @@ class MainController < ApplicationController
   end
 
   def page
+    set_sleep(params[:sleep])
     get_page(params[:url])
     normal_action()
     redirect_to("/browser")
@@ -307,6 +307,7 @@ class MainController < ApplicationController
     options.add_argument('--no-sandbox')
     options.add_argument("--window-size=#{width},#{height}")
     options.add_argument("--mute-audio")
+    options.add_argument('--log-level=1')
     @@driver = Selenium::WebDriver.for :chrome , options: options
     @wait = Selenium::WebDriver::Wait.new(:timeout => 100)
   end
@@ -328,6 +329,7 @@ class MainController < ApplicationController
     options.add_argument("--proxy-server=socks5://localhost:9150")
     options.add_argument("--window-size=#{width},#{height}")
     options.add_argument("--mute-audio")
+    options.add_argument('--log-level=1')
     @@driver = Selenium::WebDriver.for :chrome , options: options
     @wait = Selenium::WebDriver::Wait.new(:timeout => 100)
   end
