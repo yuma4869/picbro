@@ -1,27 +1,4 @@
 <style>
-    /* body {
-        padding: 0;
-        margin: 0;
-        color:#1a1a1c;
-            font-size: 1rem;
-    font-weight: 500;
-    line-height: 2;
-    letter-spacing: 0.16px;
-        box-sizing: border-box;
-        overflow: scroll;
-  -ms-overflow-style: none;   
-  scrollbar-width: none;      
-  -webkit-text-size-adjust: none;
-  overflow-x: hidden;
-    min-height: 100%;
-      font-family: 'PT Sans';
-
-
-}
-body * {
-        text-shadow: none;
-
-} */
 ul, ol {
   list-style: none;
   text-decoration: none;
@@ -34,34 +11,6 @@ ul, ol {
 }
 .block {
     display:initial;
-}
-
-/* button {
-    border:none;
-    outline:none;
-    background:transparent;
-    cursor:pointer;
-  text-wrap: balance;
-  word-break: auto;
-  overflow-wrap: break-word;
-} */
-/* 
-.item {
-    padding-left:0.5em;
-    border-left:5px solid rgb(226,227,229);
-    border-radius:2px;
-} */
-
-#error {
-    position:fixed;
-    top:0;
-    left:0;
-    margin:0;
-    padding:1em;
-    background-color:rgba(255,0,0,0.5);
-    text-align:center;
-    font-weight:bold;
-    width:100%;
 }
 
 #header {
@@ -82,75 +31,6 @@ ul, ol {
   place-items: center;
 }
 
-/* #createButton , .reload{
-    width:4em;
-    height:4em;
-    border-radius:5em;
-    transition: all 0.2s  ease-in;
-}
-#createButton {
-    margin-left:0.6em;
-} */
-.reload img{
-    width:2.5em;
-    height:2.5em;
-    margin:0 auto;
-}
-
-#createButton img {
-    width:3em;
-    height:3em;
-    margin:0 auto;
-    padding:0;
-}
-
-#createButton:hover , .reload:hover , .prev_button:hover , .next_button:hover{
-    background:#f2f2f2;
-}
-/* 
-#url {
-    width:20em;
-    height:25px;
-    font-size:20px;
-    border-radius:15px;
-    outline:none;
-    border:none;
-    background:#fff;
-    border:3px solid #cdcdcd;
-    padding:5px;
-    margin:1em;
-    margin-right:0;
-    padding-left:10px;
-}
-#url:hover {
-    background:#f2f2f2;
-}
-#url:focus {
-    background:#fff;
-    border:3px solid #2e6fd7;
-} */
-
-/* #submitButton {
-    display: block;
-	text-align: center;
-	text-decoration: none;
-	width: 4em;
-    height:4em;
-	padding: 1vh ;
-    margin:1em;
-	font-weight: bold;
-	border: 2px solid #27acd9;
-	background: #27acd9;
-	color: #fff;
-	border-radius: 100vh;
-	transition: 0.5s;
-}
-
-#submitButton:hover {
-	color: #27acd9;
-	background: #fff;
-} */
-
 #text {
     width:15em;
     height:1em;
@@ -163,22 +43,6 @@ ul, ol {
     padding:5px;
     padding-left:10px;
 }
-/* #sleep {
-    width:5em;
-    height:1em;
-    font-size:15px;
-    border-radius:10px;
-    outline:none;
-    border:none;
-    background:#fff;
-    border:2px solid #cdcdcd;
-    padding:5px;
-    padding-left:10px;
-}
-
-#text:focus ,#sleep:focus{
-    border:3px solid #444;
-} */
 .prev_button , .next_button {
     width:4em;
     height:4em;
@@ -540,177 +404,188 @@ video {
 <% end %>
 <% end %>
 
+<main class="grid grid-cols-[auto_1fr] grid-rows-[auto_1fr]">
+    <div id="logo_menu" class="h-[10vh] w-48 bg-red-500">s</div>
+    <div id="main_menu" class="h-[10vh] bg-blue-500">
+            <div class="flex items-center justify-center h-10 sm:h-20">
+            <button id="createButton" class="browser-btn btn-circle text-xs mx-0 sm:mx-1 w-9 sm:w-11 h-9 sm:h-11">Go</button>
 
-<!--ボタンとか上に持ってきたからスクリーンショット現在のブラウザの通りじゃなくなったけどそれは後々ボタンの分だけ引いたりして調整する-->
-<div id="browser" class="pt-20 mx-5 h-1/5">
-    <div class="flex items-center justify-center h-10 sm:h-20">
-        <button id="createButton" class="browser-btn btn-circle text-xs mx-0 sm:mx-1 w-9 sm:w-11 h-9 sm:h-11">Go</button>
+            <%= button_to "/browser/prev",:class => "browser-btn btn-circle mx-0 sm:mx-1 w-9 sm:w-11 h-9 sm:h-11",:id => "arrow", :method => :get do %>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 sm:w-10 h-10 sm:h-10">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+            </svg>        
+            <% end %>
 
-        <%= button_to "/browser/prev",:class => "browser-btn btn-circle mx-0 sm:mx-1 w-9 sm:w-11 h-9 sm:h-11",:id => "arrow", :method => :get do %>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 sm:w-10 h-10 sm:h-10">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-        </svg>        
-        <% end %>
+            <%= button_to "/browser/next",:class => "browser-btn btn-circle mx-0 sm:mx-1 w-9 sm:w-11 h-9 sm:h-11",:id => "arrow",:method => :get do %>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 sm:w-10 h-10 sm:h-10">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+            </svg>
+            <% end %>
 
-        <%= button_to "/browser/next",:class => "browser-btn btn-circle mx-0 sm:mx-1 w-9 sm:w-11 h-9 sm:h-11",:id => "arrow",:method => :get do %>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 sm:w-10 h-10 sm:h-10">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-        </svg>
-        <% end %>
+            <%= button_to "/browser/screen-shot",:class => "browser-btn btn-circle sm:mx-1 w-9 sm:w-11 h-9 sm:h-11", :method => :get do %>
+                <svg class="w-10 sm:w-10 h-10 sm:h-10 text-gray-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <polyline points="23 4 23 10 17 10" />  <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" /></svg>
+            <% end %>
 
-        <%= button_to "/browser/screen-shot",:class => "browser-btn btn-circle sm:mx-1 w-9 sm:w-11 h-9 sm:h-11", :method => :get do %>
-            <svg class="w-10 sm:w-10 h-10 sm:h-10 text-gray-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <polyline points="23 4 23 10 17 10" />  <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" /></svg>
-        <% end %>
-
-        <%# <input type="text" name="url" id="url" placeholder="URLを入力し、送信をクリックしてください" onfocus="this.select();"> %>
-        <%= form_tag('/browser/access',:method => :psot,:class => "w-full mx- join-item") do %>
-            <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-            <div class="relative">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                    </svg>
-                </div>
-                <input type="search" name="url" id="url" class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://" required />
-                <button class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">検索</button>
-            </div>
-        <% end %>
-
-        <%# <input type="text" placeholder="Type here" class="join-item input input-bordered input-info w-full max-w-xs" /> %>
-
-        <%# <label class="w-10">テキスト：<input type="text" name="text" id="text" placeholder="Type here" class="btn join-item input input-bordered w-5 max-w-xs" /></label> %>
-        <textarea placeholder="入力テキスト" name="text" id="text" class="textarea textarea-bordered textarea-xs join-item w-half max-w-xs" ></textarea>
-        
-        <label id="sleep" class="form-control w-1/6 max-w-xs join-item">
-            <div class="label">
-                <span class="label-text text-xs">now:<%= @sleep %></span>
-        <%= form_tag('/browser/sleep', method: :post) do %>
-                <button type="submit" class="label-text-alt bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-                </button>
-            </div>
-
-
-            <select name="sleep" class="select select-bordered select-xs">
-                <option disabled selected>待機時間</option>
-                <option value="0.1">0.1</option>
-                <option value="0.5">0.5</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
-            </select>
-        </label>
-        <% end %>
-
-        <!--
-        <p class="item" style="margin-left:1em;">待機時間:<%= @sleep %></p>
-        <%= form_tag('/browser/sleep', method: :post) do %>
-            <input type="text" name="sleep" id="sleep" onkeyup="checkSleep()">
-            <input type="submit" class="submit" value="待機時間を設定">
-        <% end %>
-        -->
-
-        <section>
-            <div class="btn-trigger" id="menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </section>
-    </div>
-    <div id="tab">
-        <div id="tab_title">
-            <% if !@tab_titles.nil? && @tab_titles.size > 0 && @tab_titles[0].length > 0 %>
-                <% i = 0 %>
-                <% @tab_titles.each do |title| %>
-                    <% class_name = i == @tab_index ? "tab active" : "tab" %>
-                    <div class="tab_main">
-                    <%= form_tag("/browser/tab-move",method: :get) do %>
-                    <input type="hidden" name="index" value="<%= i %>">
-                    <button type="submit" class="<%= class_name %>"><%= title %></button>
-                    <% end %>
-                    <%= button_to "×", "/browser/tab-rm",:class => "tab_rm",:method => :get,params: {index: i} %>
+            <%# <input type="text" name="url" id="url" placeholder="URLを入力し、送信をクリックしてください" onfocus="this.select();"> %>
+            <%= form_tag('/browser/access',:method => :psot,:class => "w-full flex join-item") do %>
+            <div class="flex-auto">
+                <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                        </svg>
                     </div>
-                    <% i += 1 %>
-                <% end %>
-                <%= button_to "＋","/browser/tab-create",:class => "tab_create",:method => :get %>
+                    <input type="search" name="url" id="url" class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://" required />
+                    <button class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">検索</button>
+                </div>
+                
+            </label>
+            </div>
+
+            <div class="">
+                <div class="label">
+                    <span class="label-text text-xs">now:<%= @sleep %></span>
+                </div>
+
+
+                <select name="sleep" class="select select-bordered select-xs">
+                    <option value="0.5" <% @sleep == 0.5 ? "selected" : ""  %>>0.5(default)</option>
+                    <option value="0.1" <% @sleep == "0.1" ? "selected" : ""  %>>0.1</option>
+                    <option value="1" <% @sleep == 1 ? "selected" : ""  %>>1</option>
+                    <option value="2" <% @sleep == 2 ? "selected" : ""  %>>2</option>
+                    <option value="5" <% @sleep == 5 ? "selected" : ""  %>>5</option>
+                    <option value="10" <% @sleep == 10 ? "selected" : ""  %>>10</option>
+                </select>
+            </div>
+
             <% end %>
+
+            <%# <input type="text" placeholder="Type here" class="join-item input input-bordered input-info w-full max-w-xs" /> %>
+
+            <%# <label class="w-10">テキスト：<input type="text" name="text" id="text" placeholder="Type here" class="btn join-item input input-bordered w-5 max-w-xs" /></label> %>
+            <textarea placeholder="入力テキスト" name="text" id="text" class="textarea textarea-bordered textarea-xs join-item w-half max-w-xs" ></textarea>
+            
+
+            <!--<%= form_tag('/browser/sleep', method: :post) do %>-->
+
+            <!-- <% end %> -->
+
+            <!--
+            <p class="item" style="margin-left:1em;">待機時間:<%= @sleep %></p>
+            <%= form_tag('/browser/sleep', method: :post) do %>
+                <input type="text" name="sleep" id="sleep" onkeyup="checkSleep()">
+                <input type="submit" class="submit" value="待機時間を設定">
+            <% end %>
+            -->
+
+            <section>
+                <div class="btn-trigger" id="menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </section>
         </div>
-        <div id="videos" >
-            <% if !@video_path.nil? && @video_path.size > 0 %>
-                <% @video_path.each do |video| %>
-                    <% if video.keys.first == "youtube" %>
-                        <button id="video_button" class="btn_link btn-youtube"><span class="fab fa-youtube fa-fw"></span><%= video["title"] %></button>
-                        <div id="video" class="z-[1000] none">
-                                <video controls name="media">
-                                    <source  src="<%= video["youtube"][6..] %>" type="video/mp4">
-                                </video>
+    </div>
+    <div id="side_menu" class="h-[90vh] bg-green-500">
+        <aside>
+
+        </aside>
+    </div>
+    <!--ボタンとか上に持ってきたからスクリーンショット現在のブラウザの通りじゃなくなったけどそれは後々ボタンの分だけ引いたりして調整する-->
+    <div id="browser" class=" mx-5 h-[90vh]">
+
+        <div id="tab">
+            <div id="tab_title">
+                <% if !@tab_titles.nil? && @tab_titles.size > 0 && @tab_titles[0].length > 0 %>
+                    <% i = 0 %>
+                    <% @tab_titles.each do |title| %>
+                        <% class_name = i == @tab_index ? "tab active" : "tab" %>
+                        <div class="tab_main">
+                        <%= form_tag("/browser/tab-move",method: :get) do %>
+                        <input type="hidden" name="index" value="<%= i %>">
+                        <button type="submit" class="<%= class_name %>"><%= title %></button>
+                        <% end %>
+                        <%= button_to "×", "/browser/tab-rm",:class => "tab_rm",:method => :get,params: {index: i} %>
                         </div>
-                    <% else %>
-                        <button id="video_button" class="btn_link btn-video"><span class="fas fa-video"></span><%= video["title"] %></button>
-                        <div id="video" class="z-1000">
-                            <%= video["video"].html_safe %>
-                        </div>
+                        <% i += 1 %>
+                    <% end %>
+                    <%= button_to "＋","/browser/tab-create",:class => "tab_create",:method => :get %>
+                <% end %>
+            </div>
+            <div id="videos" >
+                <% if !@video_path.nil? && @video_path.size > 0 %>
+                    <% @video_path.each do |video| %>
+                        <% if video.keys.first == "youtube" %>
+                            <button id="video_button" class="btn_link btn-youtube"><span class="fab fa-youtube fa-fw"></span><%= video["title"] %></button>
+                            <div id="video" class="z-[1000] none">
+                                    <video controls name="media">
+                                        <source  src="<%= video["youtube"][6..] %>" type="video/mp4">
+                                    </video>
+                            </div>
+                        <% else %>
+                            <button id="video_button" class="btn_link btn-video"><span class="fas fa-video"></span><%= video["title"] %></button>
+                            <div id="video" class="z-1000">
+                                <%= video["video"].html_safe %>
+                            </div>
+                        <% end %>
                     <% end %>
                 <% end %>
-            <% end %>
-        </div>
+            </div>
 
-        <div id="protrude_tab" style="display:none">
-            <span>...</span>
+            <div id="protrude_tab" style="display:none">
+                <span>...</span>
+            </div>
+        </div>
+        <% if @file_path.nil? %>
+        <% @file_path = "default" %>
+        <% end %>
+        <div id="imgbox" class="relative h-[70vh]" >
+
+            <p id="now_scrollup" class="scroll"></p>
+            <div class="up h-[1000px]"></div>
+            <div id="innerimg" class="relative  inset-x-0">
+                <span id="now_scrollup"></span>
+                <img src="/images/<%= @file_path %>.png" alt="page" id="img">
+                <span id="now_scrolldown"></span>
+            </div>
+            <div class="down h-[2000px]" ></div>
+            <div id="hide_tab"></div>
+            <nav id="menu_list">
+            <ul class="mobile-nav" id="mobile">
+                <%= button_to "tor","/browser/tor-create",:method => :get %>
+                <li class="menu-item menu-item-has-children">
+                <p>基本操作</p>
+                    <ul class="sub-menu">
+                        <li class="menu_item">
+                            <button id="holdButton" style="position:relative"><span class="pointer" id="one_hold">1</span>から<span class="pointer" id="two_hold">2</span>までをクリック&ホールド</button>
+                        </li>
+                        <li class="menu_item">
+                            <%= button_to "selectタグ取得","/browser/select",:method => :get %>
+                        </li>
+                    </ul>              
+                </li>
+                <li class="menu-item menu-item-has-children">
+                <p>動画</p>
+                    <ul class="sub-menu">
+                        <li class="menu_item">
+                            <%= button_to "ページ内の動画","/browser/video",:method => :get %>
+                        </li>
+                        <li class="menu_item">
+                            <%= button_to "YouTube","/browser/youtube-video",:method => :get %>
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
+            </nav>
+
+            <div class="pointer" id="one" style="display:none;">1</div>
+            <div class="pointer" id="two" style="display:none;">2</div>
         </div>
     </div>
-    <% if @file_path.nil? %>
-    <% @file_path = "default" %>
-    <% end %>
-    <div id="imgbox" class="relative h-[70vh]" >
-
-        <p id="now_scrollup" class="scroll"></p>
-        <div class="up h-[1000px]"></div>
-        <div id="innerimg" class="relative  inset-x-0">
-            <span id="now_scrollup"></span>
-            <img src="/images/<%= @file_path %>.png" alt="page" id="img">
-            <span id="now_scrolldown"></span>
-        </div>
-        <div class="down h-[2000px]" ></div>
-        <div id="hide_tab"></div>
-        <nav id="menu_list">
-        <ul class="mobile-nav" id="mobile">
-            <%= button_to "tor","/browser/tor-create",:method => :get %>
-            <li class="menu-item menu-item-has-children">
-            <p>基本操作</p>
-                <ul class="sub-menu">
-                    <li class="menu_item">
-                        <button id="holdButton" style="position:relative"><span class="pointer" id="one_hold">1</span>から<span class="pointer" id="two_hold">2</span>までをクリック&ホールド</button>
-                    </li>
-                    <li class="menu_item">
-                        <%= button_to "selectタグ取得","/browser/select",:method => :get %>
-                    </li>
-                </ul>              
-            </li>
-            <li class="menu-item menu-item-has-children">
-            <p>動画</p>
-                <ul class="sub-menu">
-                    <li class="menu_item">
-                        <%= button_to "ページ内の動画","/browser/video",:method => :get %>
-                    </li>
-                    <li class="menu_item">
-                        <%= button_to "YouTube","/browser/youtube-video",:method => :get %>
-                    </li>
-
-                </ul>
-            </li>
-        </ul>
-        </nav>
-
-        <div class="pointer" id="one" style="display:none;">1</div>
-        <div class="pointer" id="two" style="display:none;">2</div>
-    </div>
-</div>
-
+</main>
 <!--
 <% content_for :js do %>
     <%= javascript_import_module_tag "custom/main" %>
@@ -1154,6 +1029,5 @@ if (document.querySelector(".btn") != null){//ビデオボタンがあるか
 }
     var widths = 0;
 
-
-
 </script>
+
