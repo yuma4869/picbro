@@ -406,8 +406,7 @@ video {
 
 <main class="grid grid-cols-[auto_1fr] grid-rows-[auto_1fr]">
     <div id="logo_menu" class="h-[10vh] w-48 bg-red-500">s</div>
-    <div id="main_menu" class="h-[10vh] bg-blue-500">
-            <div class="flex items-center justify-center h-10 sm:h-20">
+    <div id="main_menu" class="h-[10vh] bg-blue-200 flex items-center w-full">
             <button id="createButton" class="browser-btn btn-circle text-xs mx-0 sm:mx-1 w-9 sm:w-11 h-9 sm:h-11">Go</button>
 
             <%= button_to "/browser/prev",:class => "browser-btn btn-circle mx-0 sm:mx-1 w-9 sm:w-11 h-9 sm:h-11",:id => "arrow", :method => :get do %>
@@ -427,9 +426,9 @@ video {
             <% end %>
 
             <%# <input type="text" name="url" id="url" placeholder="URLを入力し、送信をクリックしてください" onfocus="this.select();"> %>
-            <%= form_tag('/browser/access',:method => :psot,:class => "w-full flex join-item") do %>
+            <%= form_tag('/browser/access',:method => :psot,:class => "w-full flex items-center join-item") do %>
             <div class="flex-auto">
-                <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                <label for="default-search" class=" text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -439,11 +438,11 @@ video {
                     <input type="search" name="url" id="url" class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://" required />
                     <button class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">検索</button>
                 </div>
-                
+   
             </label>
             </div>
 
-            <div class="">
+            <div class="ml-5">
                 <div class="label">
                     <span class="label-text text-xs">now:<%= @sleep %></span>
                 </div>
@@ -464,7 +463,7 @@ video {
             <%# <input type="text" placeholder="Type here" class="join-item input input-bordered input-info w-full max-w-xs" /> %>
 
             <%# <label class="w-10">テキスト：<input type="text" name="text" id="text" placeholder="Type here" class="btn join-item input input-bordered w-5 max-w-xs" /></label> %>
-            <textarea placeholder="入力テキスト" name="text" id="text" class="textarea textarea-bordered textarea-xs join-item w-half max-w-xs" ></textarea>
+            <textarea placeholder="入力テキスト" name="text" id="text" class="textarea textarea-bordered textarea-xs join-item w-half max-w-xs mx-5" ></textarea>
             
 
             <!--<%= form_tag('/browser/sleep', method: :post) do %>-->
@@ -478,24 +477,47 @@ video {
                 <input type="submit" class="submit" value="待機時間を設定">
             <% end %>
             -->
-
+<%# 
             <section>
                 <div class="btn-trigger" id="menu">
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
-            </section>
-        </div>
+            </section> %>
     </div>
     <div id="side_menu" class="h-[90vh] bg-green-500">
         <aside>
+            <ul class="mobile-nav" id="mobile">
+                <%= button_to "tor","/browser/tor-create",:method => :get %>
+                <li class="menu-item menu-item-has-children">
+                <p>基本操作</p>
+                    <ul class="sub-menu">
+                        <li class="menu_item">
+                            <button id="holdButton" style="position:relative"><span class="pointer" id="one_hold">1</span>から<span class="pointer" id="two_hold">2</span>までをクリック&ホールド</button>
+                        </li>
+                        <li class="menu_item">
+                            <%= button_to "selectタグ取得","/browser/select",:method => :get %>
+                        </li>
+                    </ul>              
+                </li>
+                <li class="menu-item menu-item-has-children">
+                <p>動画</p>
+                    <ul class="sub-menu">
+                        <li class="menu_item">
+                            <%= button_to "ページ内の動画","/browser/video",:method => :get %>
+                        </li>
+                        <li class="menu_item">
+                            <%= button_to "YouTube","/browser/youtube-video",:method => :get %>
+                        </li>
 
+                    </ul>
+                </li>
+            </ul>
         </aside>
     </div>
     <!--ボタンとか上に持ってきたからスクリーンショット現在のブラウザの通りじゃなくなったけどそれは後々ボタンの分だけ引いたりして調整する-->
-    <div id="browser" class=" mx-5 h-[90vh]">
-
+    <div id="browser" class="max-h-[90vh]">
         <div id="tab">
             <div id="tab_title">
                 <% if !@tab_titles.nil? && @tab_titles.size > 0 && @tab_titles[0].length > 0 %>
@@ -541,7 +563,7 @@ video {
         <% if @file_path.nil? %>
         <% @file_path = "default" %>
         <% end %>
-        <div id="imgbox" class="relative h-[70vh]" >
+        <div id="imgbox" class="relative h-[calc(90vh-3em)]" >
 
             <p id="now_scrollup" class="scroll"></p>
             <div class="up h-[1000px]"></div>
@@ -552,34 +574,7 @@ video {
             </div>
             <div class="down h-[2000px]" ></div>
             <div id="hide_tab"></div>
-            <nav id="menu_list">
-            <ul class="mobile-nav" id="mobile">
-                <%= button_to "tor","/browser/tor-create",:method => :get %>
-                <li class="menu-item menu-item-has-children">
-                <p>基本操作</p>
-                    <ul class="sub-menu">
-                        <li class="menu_item">
-                            <button id="holdButton" style="position:relative"><span class="pointer" id="one_hold">1</span>から<span class="pointer" id="two_hold">2</span>までをクリック&ホールド</button>
-                        </li>
-                        <li class="menu_item">
-                            <%= button_to "selectタグ取得","/browser/select",:method => :get %>
-                        </li>
-                    </ul>              
-                </li>
-                <li class="menu-item menu-item-has-children">
-                <p>動画</p>
-                    <ul class="sub-menu">
-                        <li class="menu_item">
-                            <%= button_to "ページ内の動画","/browser/video",:method => :get %>
-                        </li>
-                        <li class="menu_item">
-                            <%= button_to "YouTube","/browser/youtube-video",:method => :get %>
-                        </li>
 
-                    </ul>
-                </li>
-            </ul>
-            </nav>
 
             <div class="pointer" id="one" style="display:none;">1</div>
             <div class="pointer" id="two" style="display:none;">2</div>
