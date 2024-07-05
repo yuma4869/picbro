@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   get '/' => "welcome#top"
+
+  get "/test" => "welcome#test"
+
+  post "/test/post" => "welcome#test_post"
   
   get '/browser' => "main#index"
 
