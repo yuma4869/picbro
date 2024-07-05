@@ -326,12 +326,25 @@ class MainController < ApplicationController
 
     
     options = Selenium::WebDriver::Chrome::Options.new
-    options.add_argument('--headless')
-    options.add_argument('--no-sandbox')
     options.add_argument("--proxy-server=socks5://localhost:9150")
-    options.add_argument("--window-size=#{width},#{height}")
+    options.add_argument('--headless')
+    options.add_argument('--start-maximized')
+    options.add_argument('--disable-blink-features')
+    options.add_argument('--disable-blink-features=AutomationControlled')
+    options.add_argument('--disable-browser-side-navigation')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--disable-extensions')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--disable-infobars')
+    options.add_argument('--ignore-certificate-errors')
+    options.add_argument('--ignore-ssl-errors')
+    options.add_argument('--no-sandbox')
     options.add_argument("--mute-audio")
     options.add_argument('--log-level=1')
+    #torこれでwindowサイズ設定のやつ消したら行けた
+    #https://qiita.com/kawagoe6884/items/381a938dd3d8744f29d4とか参考にする
+    #あと、classの一番上にskip-actionみたいなやつでCSRFトークンの設定飛ばしちゃったから後で治す
+
     @@driver = Selenium::WebDriver.for :chrome , options: options
     @wait = Selenium::WebDriver::Wait.new(:timeout => 100)
 
