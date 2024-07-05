@@ -381,6 +381,7 @@ video {
 <%# <p id="error" style="display:none;"></p> %>
     
 <% flash.each do |message_type, message| %>
+<%# エラーメッセージvscodeの左下のやつみたいに三段階くらいにわける。 %>
 <div class="flex justify-center">
 <div role="alert" class="absolute alert alert-<%= message_type %> shadow-lg w-11/12 mt-2 opacity-80">
   <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -405,9 +406,25 @@ video {
 <% end %>
 
 <main class="grid grid-cols-[auto_1fr] grid-rows-[auto_1fr]">
-    <div id="logo_menu" class="h-[10vh] w-64 bg-purple-300 flex justify-center items-center">
+    <div id="logo_menu" class="h-[10vh] w-64 bg-purple-100 flex items-center">
         <div id="site_logo">
             <%= image_tag "picbro_logo.png", size: "120x50", alt: "picbro logo" %>
+        </div>
+        <div id="status_check">
+            <div id="normal_browser_status">
+                <% if !@other_information.nil? && @other_information.include?("normalBrowser") %>
+                    <p class="text-green-300">Browser 〇</p>
+                <% else %>
+                    <p class="text-red-500">Browser ×</p>
+                <% end %>
+            </div>
+            <div id="tor_browser_status">
+                <% if !@other_information.nil? && @other_information.include?("torBrowser") %>
+                    <p class="text-green-300">Tor 〇</p>
+                <% else %>
+                    <p class="text-red-500">Tor ×</p>
+                <% end %>
+            </div>
         </div>
     </div>
 

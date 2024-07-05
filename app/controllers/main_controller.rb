@@ -310,6 +310,8 @@ class MainController < ApplicationController
     options.add_argument('--log-level=1')
     @@driver = Selenium::WebDriver.for :chrome , options: options
     @wait = Selenium::WebDriver::Wait.new(:timeout => 100)
+
+    @@other_information = "normalBrowser"
   end
 
   def tor_initBrowser(width,height)
@@ -332,6 +334,8 @@ class MainController < ApplicationController
     options.add_argument('--log-level=1')
     @@driver = Selenium::WebDriver.for :chrome , options: options
     @wait = Selenium::WebDriver::Wait.new(:timeout => 100)
+
+    @@other_information = "torBrowser"
   end
   #実装するときはスクリーンショットのところとか関数化したり、結構重なってるところとかあるからやめたり、begin とか使ったりする
 
@@ -388,6 +392,7 @@ class MainController < ApplicationController
     instance_sleep()
     instance_video()
     tab_check()
+    other_information()
   end
 
   def screen_shot
@@ -435,6 +440,14 @@ class MainController < ApplicationController
       @total_tab = total - @tab_index
     rescue => e
       puts e
+    end
+  end
+
+  def other_information
+    begin
+      @other_information = @@other_information
+    rescue
+
     end
   end
 
