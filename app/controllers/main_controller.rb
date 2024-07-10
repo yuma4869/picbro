@@ -1,6 +1,9 @@
 require "selenium-webdriver"
 
 class MainController < ApplicationController
+  skip_before_action :verify_authenticity_token #あきらめ
+
+
   #after_action :instance_sleep,only:[:index,:create,:rescreen_shot,:get_select,:scroll_down,:scroll_up,:back,:next,:next_tab_view,:prev_tab_view,:click_hold,:video,:youtube_video,:for_click,:page,:click,:text] #renderを最後つかうやつ
   #before_action :tab_check,only:[:index,:create,:rescreen_shot,:get_select,:scroll_down,:scroll_up,:back,:next,:next_tab_view,:prev_tab_view,:click_hold,:video,:youtube_video,:for_click,:page,:click,:text]
   #before_action :instance_video,only:[:index,:create,:rescreen_shot,:get_select,:scroll_down,:scroll_up,:back,:next,:next_tab_view,:prev_tab_view,:click_hold,:video,:youtube_video,:for_click,:page,:click,:text]
