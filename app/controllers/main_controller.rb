@@ -344,9 +344,7 @@ class MainController < ApplicationController
     options.add_argument('--no-sandbox')
     options.add_argument("--mute-audio")
     options.add_argument('--log-level=1')
-    #torこれでwindowサイズ設定のやつ消したら行けた
-    #https://qiita.com/kawagoe6884/items/381a938dd3d8744f29d4とか参考にする
-    #あと、classの一番上にskip-actionみたいなやつでCSRFトークンの設定飛ばしちゃったから後で治す
+    options.add_argument("--window-size=#{width},#{height}")
 
     @@driver = Selenium::WebDriver.for :chrome , options: options
     @wait = Selenium::WebDriver::Wait.new(:timeout => 100)
