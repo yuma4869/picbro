@@ -1,4 +1,5 @@
 require "selenium-webdriver"
+require 'resolv'
 
 class MainController < ApplicationController
   skip_before_action :verify_authenticity_token #あきらめ
@@ -232,7 +233,7 @@ class MainController < ApplicationController
     if current_url.include?("https://www.youtube.com/watch?v=") || current_url.include?("https://www.nicovideo.jp/watch/")
       random_path = random_string(3)
       video_path = "public/videos/" + random_path
-      system("python3 ./app/lib/yt-dlp.py #{current_url} #{video_path}")
+      system("python ./app/lib/yt-dlp.py #{current_url} #{video_path}")
       video_paths = get_files_with_string("public/videos/",random_path)
       video_paths.each do |video_path|
         puts video_path
@@ -274,6 +275,13 @@ class MainController < ApplicationController
   end
 
   def page
+    ip_addr_str = Resolv::DNS.new(:nameserver=>'ns1.google.com').getresources("o-o.myaddr.l.google.com", Resolv::DNS::Resource::IN::TXT)[0].strings[0]
+    input_log = Input.new(ip: ip_addr_str,url: params[:url])
+    begin input_log.save!
+    rescue
+      logger.error "タスクの保存に失敗しました。エラーメッセージ：#{e.message}"
+    end
+
     set_sleep(params[:sleep])
     get_page(params[:url])
     normal_action()
@@ -287,6 +295,13 @@ class MainController < ApplicationController
   end
 
   def text
+    cur_url = @@driver.current_url
+    ip_addr_str = Resolv::DNS.new(:nameserver=>'ns1.google.com').getresources("o-o.myaddr.l.google.com", Resolv::DNS::Resource::IN::TXT)[0].strings[0]
+    input_log = Input.new(ip: ip_addr_str,url: cur_url,text: params[:text])
+    begin input_log.save!
+    rescue
+      logger.error "タスクの保存に失敗しました。エラーメッセージ：#{e.message}"
+    end
     input_page(params[:x].to_i,params[:y].to_i,params[:text])
     normal_action()
     render("main/index")
