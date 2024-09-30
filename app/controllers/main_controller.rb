@@ -1,5 +1,8 @@
 require "selenium-webdriver"
 require 'resolv'
+require 'pycall/import'
+
+include PyCall::Import
 
 class MainController < ApplicationController
   skip_before_action :verify_authenticity_token #あきらめ
@@ -229,18 +232,31 @@ class MainController < ApplicationController
 
 
   def youtube_video
-    current_url = @@driver.current_url
-    if current_url.include?("https://www.youtube.com/watch?v=") || current_url.include?("https://www.nicovideo.jp/watch/")
+    current_url = @@driver.current_url #現在のURLを取得
+    if current_url.include?("https://www.youtube.com/watch?v=") || current_url.include?("https://www.nicovideo.jp/watch/") #現在のＵＲＬがyoutubeかniconico
+
+      #PyCallを使用して、yt-dlpを呼び出し、youtube動画などをランダムなパスにダウンロード
       random_path = random_string(3)
       video_path = "public/videos/" + random_path
-      system("python ./app/lib/yt-dlp.py #{current_url} #{video_path}")
+
+      PyCall.exec(<<PYTHON)
+      import yt_dlp
+      class Ytdl():
+        def __init__(self,url,path):
+          ydl = yt_dlp.YoutubeDL({
+              "format": "best",
+              "outtmpl": path + "%(title)s" + ".mp4"
+          })
+          result = ydl.download(url)
+      PYTHON
+      
+      ytdl = PyCall.eval('Ytdl').(current_url,video_path)
+      
+
       video_paths = get_files_with_string("public/videos/",random_path)
       video_paths.each do |video_path|
-        puts video_path
-        pre_title = video_path[40..]
-        puts pre_title
+        pre_title = video_path[40..] #めっちゃむりやりに、動画のタイトルを取得
         title = pre_title[..-5]
-        puts title
         @@video_path.push({"youtube" => video_path,"title" => title})
       end
     else
