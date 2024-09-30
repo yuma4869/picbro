@@ -516,38 +516,16 @@ video {
                     <span class="flex-1 ms-3 whitespace-nowrap">YouTube動画ダウンロード</span>
                     </a>
                 </li>
-                <%# <li>
-                    <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <li>
+                    <a href="/browser/video" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                         <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
                         <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"/>
                     </svg>
-                    <span class="ms-3">Dashboard</span>
+                    <span class="ms-3">ページ内の動画を取得</span>
                     </a>
                 </li>
-                %>
-                <li>
-                    <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
-                        <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
-                            <path d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z"/>
-                        </svg>
-                        <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">基本操作</span>
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                        </svg>
-                    </button>
-                    <ul id="dropdown-example" class="hidden py-2 space-y-2">
-                        <li>
-                            <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Products</a>
-                        </li>
-                        <li>
-                            <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Billing</a>
-                        </li>
-                        <li>
-                            <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Invoice</a>
-                        </li>
-                    </ul>
-                </li>
+                
                 <%#
                 <li>
                     <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -604,7 +582,7 @@ video {
             </ul>
         </div>
         </aside>
-        <aside>
+        <!-- <aside>
             <ul class="mobile-nav" id="mobile">
                 <%= button_to "tor","/browser/tor-create",:method => :get %>
                 <li class="menu-item menu-item-has-children">
@@ -631,7 +609,7 @@ video {
                     </ul>
                 </li>
             </ul>
-        </aside>
+        </aside> -->
     </div>
     <!--ボタンとか上に持ってきたからスクリーンショット現在のブラウザの通りじゃなくなったけどそれは後々ボタンの分だけ引いたりして調整する-->
     <div id="browser" class="max-h-[90vh]">
@@ -738,7 +716,7 @@ video {
 
     function createBrowser() {
         let width = document.getElementById("imgbox").clientWidth;
-        let height = document.getElementById("imgbox").clientHeight;
+        let height = document.getElementById("imgbox").clientHeight + 146;
         window.location.href = "/browser/create?width=" + width + "&height=" + height;
     }
 
@@ -862,7 +840,6 @@ e.preventDefault();
 }
 box.onscroll = function() {
     scroll = $(this).scrollTop() - 1032;
-    console.log("sdfs"+scroll);
     if(scroll >= 0){
         document.getElementById("now_scrollup").innerText = "";
         document.getElementById("now_scrolldown").innerText = scroll;
@@ -872,11 +849,9 @@ box.onscroll = function() {
     }
 }
 box.onscrollend = (event) => {
-    console.log("aaadfg"+scroll);
     if(Math.abs(scroll) >= 100){
         window.location.href = "/browser/scroll/" + scroll;
         scroll_flag = 1;
-        console.log(scroll_flag);
     }
 };
 
@@ -891,19 +866,13 @@ if(scroll_flag == 1){console.log("aa");init_scroll();}
 var scroll = 0;
 var scroll_flag = 0;
     var a = document.getElementById("img").getBoundingClientRect().top;
-    console.log("sd"+a);
     var elm = document.getElementById("imgbox");
-    console.log("ssss");
     elm.scrollTop = 1032;
-    console.log("ffff");
 
 function init_scroll() {
     var a = document.getElementById("img").getBoundingClientRect().top;
-    console.log("sd"+a);
     var elm = document.getElementById("imgbox");
-    console.log("ssss");
     elm.scrollTop = 1032;
-    console.log("ffff");
 }
 //特定の文字を押された際に特定の動作をする-->
 
@@ -914,65 +883,48 @@ var hold_count = 0;
 var hold_x = 0;
 var hold_y = 0;
 
-function onKeyDown(e) {
-    console.log(e);
-    if(String(e.code) == "Backspace" && hold_count != 0 && img_mouse_flag == true){
-        var id = hold_count == 2 ? "one" : "two";
-        var element = document.getElementById(id);
-        element.style.display = "none";
-        var element_hold = document.getElementById(id + "_hold");
-        element_hold.style.opacity = 0.5;
-        hold_count = id == "one" ? 1 : 2; //3回とか押したら２だけが表示されるようなことが起きるけど動いたらヨシ!!
-    }
-    if(String(e.code) == "KeyM" && img_mouse_flag == true ){
+// function onKeyDown(e) {
+//     console.log(e);
+//     if(String(e.code) == "Backspace" && hold_count != 0 && img_mouse_flag == true){
+//         var id = hold_count == 2 ? "one" : "two";
+//         var element = document.getElementById(id);
+//         element.style.display = "none";
+//         var element_hold = document.getElementById(id + "_hold");
+//         element_hold.style.opacity = 0.5;
+//         hold_count = id == "one" ? 1 : 2; //3回とか押したら２だけが表示されるようなことが起きるけど動いたらヨシ!!
+//     }
+//     if(String(e.code) == "KeyM" && img_mouse_flag == true ){
 
 
-        if(hold_count <= 1){
-            var one = document.getElementById("one");
-            one.style.display = "block";
-            one.style.position = "absolute";
-            one.style.left = hold_x + "px";
-            one.style.top = hold_y + "px";
-            var one_hold = document.getElementById("one_hold");
-            one_hold.style.opacity = 1;
-            hold_count += 2;
-            console.log(hold_count);
-        }else{
-            var two = document.getElementById("two");
-            two.style.display = "block";
-            two.style.position = "absolute";
-            two.style.left = hold_x + "px";
-            two.style.top = hold_y + "px";
-            var two_hold = document.getElementById("two_hold");
-            two_hold.style.opacity = 1;
-            hold_count = 1;
-        }
-    }
-    keyArr.push(e.code)
-    if (keyArr.length > 10) {
-        keyArr.shift()
-    }
-    var konamiCommand = [
-        'ArrowUp',
-        'ArrowUp',
-        'ArrowDown',
-        'ArrowDown',
-        'ArrowLeft',
-        'ArrowRight',
-        'ArrowLeft',
-        'ArrowRight',
-        'KeyB',
-        'KeyA',
-    ]
-    console.log(keyArr)
+//         if(hold_count <= 1){
+//             var one = document.getElementById("one");
+//             one.style.display = "block";
+//             one.style.position = "absolute";
+//             one.style.left = hold_x + "px";
+//             one.style.top = hold_y + "px";
+//             var one_hold = document.getElementById("one_hold");
+//             one_hold.style.opacity = 1;
+//             hold_count += 2;
+//             console.log(hold_count);
+//         }else{
+//             var two = document.getElementById("two");
+//             two.style.display = "block";
+//             two.style.position = "absolute";
+//             two.style.left = hold_x + "px";
+//             two.style.top = hold_y + "px";
+//             var two_hold = document.getElementById("two_hold");
+//             two_hold.style.opacity = 1;
+//             hold_count = 1;
+//         }
+//     }
+//     keyArr.push(e.code)
+//     if (keyArr.length > 10) {
+//         keyArr.shift()
+//     }
 
-    if (String(keyArr) === String(konamiCommand)) {
-        console.log("できた！")
-    }
-}
-console.log("hello");
+// }
 // img = document.getElementById("img");
-document.addEventListener('keydown', onKeyDown);
+// document.addEventListener('keydown', onKeyDown);
 
 document.onmousemove = onmousemove;
 onmousemove = function(e) {
@@ -1015,26 +967,24 @@ $(function(){
 });
 
 
-function responsive(){
-    if (window.innerWidth <= 640){
-        responsive_elements.map(el => document.getElementById(el).classList.add("responsive_hide","none"));
-    }else{
-        if (document.getElementById(responsive_elements[0]).classList.contains("responsive_hide")) {
-            responsive_elements.map(el => document.getElementById(el).classList.remove("responsive_hide","none"));
-            clone_els = document.querySelectorAll("#cloned");
-            clone_els.map(el => el.remove());
-        }
-    }
-    console.log("mictest 3456");
-    var hide_elements = document.getElementsByClassName("responsive_hide");
-    for ( var i = 0, len = hide_elements.length; i < len; i++ ){
-        console.log("mictest 12");
-        var menu = document.getElementById("menu_list");
-        var hide_element = document.getElementById(hide_elements[i]).cloneNode(true);//矢印のid arrowで二つともやからそれでありもしない？みたいな？
-        hide_element.id = "cloned";
-        menu.insertBefore(hide_element,menu.firstChild);
-    }
-}
+// function responsive(){
+//     if (window.innerWidth <= 640){
+//         responsive_elements.map(el => document.getElementById(el).classList.add("responsive_hide","none"));
+//     }else{
+//         if (document.getElementById(responsive_elements[0]).classList.contains("responsive_hide")) {
+//             responsive_elements.map(el => document.getElementById(el).classList.remove("responsive_hide","none"));
+//             clone_els = document.querySelectorAll("#cloned");
+//             clone_els.map(el => el.remove());
+//         }
+//     }
+//     var hide_elements = document.getElementsByClassName("responsive_hide");
+//     for ( var i = 0, len = hide_elements.length; i < len; i++ ){
+//         var menu = document.getElementById("menu_list");
+//         var hide_element = document.getElementById(hide_elements[i]).cloneNode(true);//矢印のid arrowで二つともやからそれでありもしない？みたいな？
+//         hide_element.id = "cloned";
+//         menu.insertBefore(hide_element,menu.firstChild);
+//     }
+// }
 
 window.addEventListener('resize',responsive);
 

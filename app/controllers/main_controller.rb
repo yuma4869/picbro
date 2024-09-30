@@ -4,72 +4,25 @@ require 'pycall/import'
 
 include PyCall::Import
 
+PyCall.exec(<<PYTHON)
+import yt_dlp
+class Ytdl():
+  def __init__(self,url,path):
+    ydl = yt_dlp.YoutubeDL({
+        "format": "best",
+        "outtmpl": path + "%(title)s" + ".mp4"
+    })
+    result = ydl.download(url)
+PYTHON
+
 class MainController < ApplicationController
   skip_before_action :verify_authenticity_token #あきらめ
 
-
-  #after_action :instance_sleep,only:[:index,:create,:rescreen_shot,:get_select,:scroll_down,:scroll_up,:back,:next,:next_tab_view,:prev_tab_view,:click_hold,:video,:youtube_video,:for_click,:page,:click,:text] #renderを最後つかうやつ
-  #before_action :tab_check,only:[:index,:create,:rescreen_shot,:get_select,:scroll_down,:scroll_up,:back,:next,:next_tab_view,:prev_tab_view,:click_hold,:video,:youtube_video,:for_click,:page,:click,:text]
-  #before_action :instance_video,only:[:index,:create,:rescreen_shot,:get_select,:scroll_down,:scroll_up,:back,:next,:next_tab_view,:prev_tab_view,:click_hold,:video,:youtube_video,:for_click,:page,:click,:text]
-
-  # before_action :instance_sleep,only:[:render]
-  # before_action :tab_check,only:[:render]
-  # before_action :instance_video,only:[:render]
-  # before_action :test,only:[:create]
-
-  
-
-  #####やることリスト#########
-  
-  ####最重要###########################
-  ##
-  ##    最初の画像今はyuma4869.comのトプ画なってるけど、そこにURLを入力して検索しても画像表示されなかったらリロードボタンを押す！！的なそういうことを書いてある画像にする。スマホとかとで変える
-  ##
-  ##################################
-
-  #済: ビデオ再生（一番の目的はyoutube) youtubeのみ済
-  #:済　ロードが長いのとかように待機時間指定
-  #ブラウザとかを再現するUIデザインをプロに任せる？時間あったら自分でやる
-  #https://qiita.com/mochio/items/dc9935ee607895420186 この記事にあるやつだいたい再現する
-  #済：横向きのスクロール
-  #いらない：連続クリックのポインター
-  #：済　selectタグ
-  #お気に入りとか閲覧履歴とか記録したい無料でデバイス記録してcookieで閲覧履歴保存するかログインして閲覧履歴保存してもらうかは未定
-  #LINEとかもできるように
-  #https以外でもアクセスできるように
-  #プロセカの最初のやつみたいに、上に、「selectはselectボタンを押そう」「テキスト入力はTをクリック！」「ロードが続いているときはスクリーンショット再取得ボタンをおす！（バックグラウンドでブラウザは起動しているからもうロードは終わってるはずだから）」みたいなのを上部に表示して回す。クリックしたら次のメッセージ表示
-  #済：クリック&ホールドで「s」おして一回目のクリックしたところの横に1、その次にクリックしたところを2と表示して、1から2にクリック&ホールドしてこれ応用してスクロールバー動かしたりする
-  #ファイルアップロードとかはpicture_browserの意義に反するから実装しないかも？
-  #:新しいタブが開かれたこと教えるだけでよきとした　　リンクとか押して新しいタブが開かれたら検知して、そっちに移動できるようにしたりする
-  #拡大縮小
-  #iframe(youtubeとかこれで流されてること多いけど)
-
-  #これ悪用される恐れとかあるから、torでIP秘匿は別にせんでええからvpsのログインを公開鍵だけにしておく
-  #：済　youtubeはクリックした動画のURL取得して裏でytdlp動かす
-  #yt-dlpはニコニコとかにも使えるからそそれにも対応
-  #なんかボタンと顔してyoutubeの倍速とかショート対応とか字幕とかに対応してほしい人はこれ推してってやっておした人数表示できるようにして人気アピールとかファイルアップロード機能とか
-  #コピーとか、Ctrl+cとか実行できて中の文字取れたり、特定キーおしたり、やってほしいことはメールアドレスなどは入れなくてもいいから問い合わせで気軽にできるようにする
-
-  #ニコニコ動画ダウンロードでダウンロード制限のあある動画もcookie設定したらダウンロードできるからそれ実装してほしいか見たいなアンケートもとる
-
-  #01/12 ToDO 新しいタブ作成。レスポンシブ。
-  #01/15 rails sでエラーが出るのは"D:\Pragram\Ruby\Ruby32-x64\lib\ruby\3.2.0\x64-mingw-ucrt\fiber.so"を追加したから
-
-  def test_view
-    
-  end
-
   def index
-    
     normal_action()
   end
 
-  def test
-    @fuck = "test"
-    redirect_to "/",params:{"fuck" => @fuck}
-  end
-
-  def create
+  def create #ブラウザ作成
     initBrowser(params[:width],params[:height])
     @file_path = "default"
     normal_action()
@@ -86,44 +39,35 @@ class MainController < ApplicationController
   def rescreen_shot #スクリーンショット再取得
     screen_shot()
     normal_action()
-    # @scroll_init = true
     render("main/index")
   end
 
-  def set_sleep(raw_sleep)
+  def set_sleep(raw_sleep) #待機時間設定
     # 正規表現を定義する
     regex = /\A[+-]?\d+\.?\d*\z/
 
     # 正規表現にマッチするかどうかを確認する
     if regex.match(raw_sleep)
       @@sleep = params[:sleep].to_f
-      puts @@sleep
       @sleep = @@sleep
-      puts @sleep
     else
       flash.now[:error] = ["待機時間が正しくありません","待機時間は正の実数を入力してください"]
     end
-    puts @sleep
     normal_action()
   end
 
-  def get_select
+  def get_select #selectタグ取得
     source = @@driver.page_source
-    puts source
     @selects = source.gsub(/\n/, '').scan(/<select.*?>.*?<\/select>/)
     screen_shot()
     normal_action()
     render("main/index")
   end
 
-  #ToDo
-  #スクロール、やけど、インスタのフォロワーのところのスクロールみたいに一部しか出金みたいなところはまだ試してないけど、クリックホールドでスクロールバー動かす
-  #インスタのやつとかはlocation_once_scrolled_into_view使ったらいいかも？試してないけど
-  #20240105  ドラック安堵ドロップですくろーるばー移動することで解決。コラムみたいにして紹介
   def scroll
     scroll = params[:scroll]
     begin
-      @@driver.execute_script("window.scrollBy(0,#{scroll});")
+      @@driver.execute_script("window.scrollBy(0,#{scroll});") #javascriptでスクロールさせる
     rescue
       flash.now[:error] = ["Create Browser","ブラウザが作られていません。新しく作り直してください。"]
     end
@@ -132,7 +76,7 @@ class MainController < ApplicationController
     render("main/index") 
   end
 
-  def back
+  def back #ひとつ前に戻る
     begin
       @@driver.navigate.back
     rescue
@@ -156,7 +100,7 @@ class MainController < ApplicationController
     render("main/index") 
   end
 
-  def tab_move
+  def tab_move #別のタブを開く、ドライバーのカレントタブを設定
     tab_index = params[:index].to_i
     begin
       @@driver.switch_to.window(@@driver.window_handles[tab_index])
@@ -168,7 +112,7 @@ class MainController < ApplicationController
     render("main/index")
   end
 
-  def tab_rm 
+  def tab_rm #タブ削除
     tab_index = params[:index].to_i
     puts tab_index
     begin
@@ -192,7 +136,7 @@ class MainController < ApplicationController
     render("main/index")  
   end
   
-  def click_hold
+  def click_hold #クリック＆ホールド、スクロールバーをマウスで移動させるときのようなやつ
     one_x = params[:one_x].to_i
     one_y = params[:one_y].to_i
     two_x = params[:two_x].to_i - one_x #move_byで相対位置で動くから差を求める
@@ -215,7 +159,7 @@ class MainController < ApplicationController
 
   
   def video
-    source = @@driver.page_source
+    source = @@driver.page_source #ページのソースから、videoタグがあるかを探す
     videos = source.gsub(/\n/, '').scan(/<video.*?>.*?<\/video>/)
     if videos.length > 0
       title = @@driver.title
@@ -239,16 +183,7 @@ class MainController < ApplicationController
       random_path = random_string(3)
       video_path = "public/videos/" + random_path
 
-      PyCall.exec(<<PYTHON)
-      import yt_dlp
-      class Ytdl():
-        def __init__(self,url,path):
-          ydl = yt_dlp.YoutubeDL({
-              "format": "best",
-              "outtmpl": path + "%(title)s" + ".mp4"
-          })
-          result = ydl.download(url)
-      PYTHON
+
       
       ytdl = PyCall.eval('Ytdl').(current_url,video_path)
       
@@ -267,31 +202,8 @@ class MainController < ApplicationController
     render("main/index")
   end
 
-  def for_click
-    #ToDo:selectのところテキスト入力したらいいと言ってたけど、selectどんな項目あるか結局スクロールできな意味ないので、結局ソースからoptionタグ探すことになりそう
-    puts "成功"
-    param = params[:params] #変数名思いつかん、これが実務経験なしの独学のデメリット
-    vector = param.split("/")
-    count = vector.size
-    x = []
-    y = []
-    if count % 2 == 0
-      #select 対策とかで連続してクリックできるようにして、それで最後にtextがついてたら奇数になるからそれの判定
-      #select対策は普通にテキスト入力でできることが判明
-      vector.each_with_index { |first, second| second.even? ? x << first : y << first }
-      puts "#{vector}::#{x}::#{y}"
-      for_click_page(x,y,count/2)
-    else
-      text = vector.pop
-      vector.each_with_index { |first, second| second.even? ? x << first : y << first }
-      for_input_page(x,y,text,count/2)
-    end
-    normal_action()
-    render("main/index")
-  end
-
   def page
-    ip_addr_str = Resolv::DNS.new(:nameserver=>'ns1.google.com').getresources("o-o.myaddr.l.google.com", Resolv::DNS::Resource::IN::TXT)[0].strings[0]
+    ip_addr_str = Resolv::DNS.new(:nameserver=>'ns1.google.com').getresources("o-o.myaddr.l.google.com", Resolv::DNS::Resource::IN::TXT)[0].strings[0] #悪用防止のため、一応データベースに保存、公開を宣言するときは、きちんとIPを集める旨を伝えたり、別の方法にする
     input_log = Input.new(ip: ip_addr_str,url: params[:url])
     begin input_log.save!
     rescue
@@ -333,9 +245,8 @@ class MainController < ApplicationController
     end
     
     @@video_path = []
-    Selenium::WebDriver.logger.output = File.join("./", "selenium.log")
-    Selenium::WebDriver.logger.level = :warn
-    
+    chromedriver_path = File.expand_path('../chromedriver.exe', __FILE__)
+    Selenium::WebDriver::Chrome::Service.driver_path="C:\\Users\\tttyy\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe" #ローカル用
     options = Selenium::WebDriver::Chrome::Options.new
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
@@ -360,7 +271,7 @@ class MainController < ApplicationController
 
     
     options = Selenium::WebDriver::Chrome::Options.new
-    options.add_argument("--proxy-server=socks5://localhost:9150")
+    options.add_argument("--proxy-server=socks5://localhost:9150") #windowsテスト環境用、torBrowserを開いて、接続をしたらseleniumで起動できる
     options.add_argument('--headless')
     options.add_argument('--start-maximized')
     options.add_argument('--disable-blink-features')
@@ -382,11 +293,9 @@ class MainController < ApplicationController
 
     @@other_information = "torBrowser"
   end
-  #実装するときはスクリーンショットのところとか関数化したり、結構重なってるところとかあるからやめたり、begin とか使ったりする
 
   def get_page(url)
       @@sleep ||= 0.5
-      puts @@sleep
       @@driver.get(url)
       sleep @@sleep
       screen_shot()
@@ -416,24 +325,9 @@ class MainController < ApplicationController
     screen_shot()
   end
 
-  def for_input_page(x,y,text,count)
-    @@sleep ||= 0.5
-    count -= 1
-    for i in 0..count
-      if i == count
-        @@driver.action.move_to_location(x[i].to_i,y[i].to_i).click.send_keys(text).perform
-        sleep @@sleep
-      else
-        @@driver.action.move_to_location(x[i].to_i,y[i].to_i).click.perform
-        sleep @@sleep
-      end
-    end
-    screen_shot()
-  end
-
   private
 
-  def normal_action  #rails初心者独学マンなのでこんなクソみたいな方法しか知りません
+  def normal_action  #なんかもっといい方法ありそう、これでやってるのは、@sleepとかで、index.html.erbに待機時間表示させたいから、クラス変数をインスタンス変数に変換している
     instance_sleep()
     instance_video()
     tab_check()
@@ -469,13 +363,10 @@ class MainController < ApplicationController
   def tab_check
     begin
       @tab_titles = []
-      puts "a"
       @@tab_index = @@driver.window_handles.index(@@driver.window_handle)
-      puts "b"
       @tab_index = @@tab_index
 
       total = @@driver.window_handles.length.to_i
-      puts total
       for i in 0..total - 1
         @@driver.switch_to.window(@@driver.window_handles[i])
         @tab_titles.push(@@driver.title)
@@ -497,7 +388,7 @@ class MainController < ApplicationController
   end
 
   def get_files_with_string(folder_path, string)
-    files = Dir.glob(File.join(folder_path, "*"))
+    files = Dir.glob(File.join(folder_path, "*")) #ランダムなファイルパス生成
     result = []
     files.each do |file_path|
       if file_path.include?(string)

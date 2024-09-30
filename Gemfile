@@ -5,6 +5,8 @@ ruby "3.2.2"
 
 gem "selenium-webdriver"
 
+gem 'pycall'
+
 gem 'cssbundling-rails'
 gem 'jsbundling-rails'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
