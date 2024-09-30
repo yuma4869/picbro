@@ -246,7 +246,7 @@ class MainController < ApplicationController
     
     @@video_path = []
     chromedriver_path = File.expand_path('../chromedriver.exe', __FILE__)
-    Selenium::WebDriver::Chrome::Service.driver_path="C:\\Users\\tttyy\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe" #ローカル用
+    Selenium::WebDriver::Chrome::Service.driver_path=chromedriver_path
     options = Selenium::WebDriver::Chrome::Options.new
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
